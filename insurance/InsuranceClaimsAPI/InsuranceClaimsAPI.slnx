@@ -1,3 +1,4 @@
 <Solution>
   <Project Path="InsuranceClaimsAPI/InsuranceClaimsAPI.csproj" />
+  <Project Path="InsuranceClaimsTests/InsuranceClaimsTests.csproj" Id="8596e0a8-edfa-40d6-8765-ae70e0822cd3" />
 </Solution>
