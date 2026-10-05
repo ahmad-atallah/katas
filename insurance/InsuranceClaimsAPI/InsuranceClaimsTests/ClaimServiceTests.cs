@@ -107,5 +107,38 @@ namespace InsuranceClaimsTests
             Assert.Equal(0, result.Payout);
             Assert.Equal(ReasonCode.NotCovered, result.ReasonCode);
         }
+
+        [Fact]
+        public void EvaluateClaim_PayoutIsZeroOrNegative_ReturnsZeroPayout()
+        {
+            // Arrange
+            var policy = new Policies
+            {
+                PolicyId = "POL123",
+                StartDate = new DateTime(2023, 1, 1),
+                EndDate = new DateTime(2024, 1, 1),
+                Deductible = 500,
+                CoverageLimit = 10000,
+                CoveredIncidents = [IncidentType.Fire]
+            };
+
+            var claim = new Claims
+            {
+                PolicyId = "POL123",
+                IncidentType = IncidentType.Fire,
+                IncidentDate = new DateTime(2023, 6, 15),
+                AmountClaimed = 300
+            };
+
+            var service = new ClaimService();
+
+            // Act
+            var result = service.EvaluateClaim(claim, policy);
+
+            // Assert
+            Assert.False(result.Approved);
+            Assert.Equal(0, result.Payout);
+            Assert.Equal(ReasonCode.ZeroPayout, result.ReasonCode);
+        }
     }
 }

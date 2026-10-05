@@ -22,7 +22,7 @@ namespace InsuranceClaimsAPI.Services
             }
 
             //Check if the incident type is covered
-           else if (!policy.CoveredIncidents.Contains(claim.IncidentType))
+            else if (!policy.CoveredIncidents.Contains(claim.IncidentType))
             {
                 claimResult = new ClaimsEvaluation
                 {
@@ -36,12 +36,27 @@ namespace InsuranceClaimsAPI.Services
             else
             {
                 var payout = claim.AmountClaimed - policy.Deductible;
-                claimResult = new ClaimsEvaluation
+
+                if (payout <= 0)
                 {
-                    Approved = true,
-                    Payout = payout,
-                    ReasonCode = ReasonCode.Approved
-                };
+                    claimResult = new ClaimsEvaluation
+                    {
+                        Approved = false,
+                        Payout = 0,
+                        ReasonCode = ReasonCode.ZeroPayout
+                    };
+                }
+
+                else
+                {
+
+                    claimResult = new ClaimsEvaluation
+                    {
+                        Approved = true,
+                        Payout = payout,
+                        ReasonCode = ReasonCode.Approved
+                    };
+                }
             }
             return claimResult;
         }
