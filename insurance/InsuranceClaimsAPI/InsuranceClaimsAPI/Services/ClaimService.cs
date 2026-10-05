@@ -49,6 +49,10 @@ namespace InsuranceClaimsAPI.Services
 
                 else
                 {
+                    if (payout > policy.CoverageLimit)
+                    {
+                        payout = policy.CoverageLimit; //Payout can't be more then the coverage limit
+                    }
 
                     claimResult = new ClaimsEvaluation
                     {
