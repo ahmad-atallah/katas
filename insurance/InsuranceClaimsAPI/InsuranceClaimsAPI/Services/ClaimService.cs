@@ -1,6 +1,5 @@
 ﻿using InsuranceClaimsAPI.Enums;
 using InsuranceClaimsAPI.Models;
-using System.Security.Claims;
 
 namespace InsuranceClaimsAPI.Services
 {
